@@ -14,38 +14,32 @@ import sys
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-
-#############Load config.json and get input and output paths
-with open('config.json','r') as f:
-    config = json.load(f) 
-
-input_folder_path = config['input_folder_path']
-output_folder_path = config['output_folder_path']
-
-# get current directory
-working_dir = os.getcwd()
-# get current date
-today = datetime.today().strftime('%Y%m%d')
-
 def read_csv_files(filename):
     """ 
     Read a CSV file using the filename.
     """
     return pd.read_csv(filename)
 
-#############Function for data ingestion
+# Function for data ingestion
 def merge_multiple_dataframe():
     """
     Check for datasets, compile them together, and write to an output file.
     """
+    logging.info('starting data ingestion process')
+    # Load config.json and get input and output paths
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+
+    input_folder_path = config['input_folder_path']
+    output_folder_path = config['output_folder_path']
+
     # Get a list of all CSV files in the directory
-    
     csv_files = [file for file in os.listdir(input_folder_path) if file.endswith('.csv')]
 
     dataframes = []
     for file in csv_files:
         filepath = os.path.join(input_folder_path, file)
-        df = pd.read_csv(filepath)
+        df = read_csv_files(filepath)
         dataframes.append(df)
     merged_df = pd.concat(dataframes, ignore_index=True).drop_duplicates()
         
