@@ -1,6 +1,5 @@
 """
-This script used to generate a confusion matrix
-and generate PDF report.
+This script used to generate a confusion matrix.
 
 Name: Nedal Altiti
 Date: 09 / 15 2023
@@ -10,7 +9,7 @@ import os
 import logging
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+from sklearn.metrics import confusion_matrix
 from diagnostics import model_predictions
 from ingestion import read_csv_files
 
@@ -30,15 +29,17 @@ def score_model():
     """
     calculate a confusion matrix using the test data and the deployed model
     """
+    # Read test data
     data = read_csv_files(test_data_path)
     y = data['exited']
-    pred = model_predictions(data)
-    cm = confusion_matrix(y, pred)
-    # disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-    # disp.plot()
-    # logger.info(f'Savind confusion matrix in {output_model_path}')
-    # plt.savefig(os.path.join(output_model_path, 'confusionmatrix.png'))
 
+    # Get model predictions
+    pred = model_predictions(data)
+
+    # Calculate confusion matrix
+    cm = confusion_matrix(y, pred)
+
+    # Plot confusion matrix
     plt.figure(figsize=(6, 6))
     ax = sns.heatmap(cm, annot=True, cmap='Blues')
     ax.set_title('Confusion matrix')
@@ -46,8 +47,11 @@ def score_model():
     ax.set_ylabel('True Label')
     ax.xaxis.set_ticklabels(['False', 'True'])
     ax.yaxis.set_ticklabels(['False', 'True'])
-    logger.info(f"confusion matrix saved in {config['output_model_path']}")
+
+    # Save confusion matrix plot
     plt.savefig(os.path.join(output_model_path, 'confusionmatrix.png'))
+    logger.info(f"confusion matrix saved in {config['output_model_path']}")
+    return cm
 
 if __name__ == '__main__':
     score_model()
