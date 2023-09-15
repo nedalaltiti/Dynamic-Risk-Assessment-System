@@ -1,6 +1,3 @@
-from flask import Flask, session, jsonify, request
-import pandas as pd
-import numpy as np
 """
 deploying the Logistic Regression Model in training data.
 
@@ -9,9 +6,6 @@ Date: 14 / 09 / 2023
 """
 import shutil
 import os
-from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 import json
 import logging
 import sys
