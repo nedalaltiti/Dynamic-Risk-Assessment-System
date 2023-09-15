@@ -22,7 +22,7 @@ with open('config.json','r') as f:
 dataset_csv_path = os.path.join(config['output_folder_path'], 'finaldata.csv')
 model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl')
 
-logging.info('Segregating the training data.')
+logging.info('Segregating the data.')
 def segregate_dataset(dataset):
     """
     Eliminate features not used
@@ -36,8 +36,8 @@ def segregate_dataset(dataset):
     return X,y
 
 # Function for training the model
-logging.info('training the Logistic Regression Model started.')
 def train_model():
+    logging.info('training the Logistic Regression Model started.')
     X, y = segregate_dataset(dataset_csv_path)
     #use this logistic regression for training
     model = LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,

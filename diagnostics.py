@@ -1,45 +1,145 @@
+"""
+Diagnosting the Logistic Regression Model and the Data.
 
-import pandas as pd
-import numpy as np
-import timeit
+Name: Needal Altiti
+Date: 15 / 09 / 2023
+"""
 import os
 import json
+import logging
+import pickle
+import subprocess
+import timeit
+import numpy as np
+from typing import Dict, List, Union
+from training import segregate_dataset
+from ingestion import read_csv_files
 
-##################Load config.json and get environment variables
+# logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logger = logging.getLogger()
+# Load config.json and get environment variables
 with open('config.json','r') as f:
     config = json.load(f) 
 
-dataset_csv_path = os.path.join(config['output_folder_path']) 
-test_data_path = os.path.join(config['test_data_path']) 
+dataset_csv_path = os.path.join(config['output_folder_path'], 'finaldata.csv') 
+test_data_path = os.path.join(config['test_data_path'], 'testdata.csv') 
+prod_deployment_path = os.path.join(config['prod_deployment_path'])
 
-##################Function to get model predictions
-def model_predictions():
-    #read the deployed model and a test dataset, calculate predictions
-    return #return value should be a list containing all predictions
+def load_model(model_path: str):
+    """
+    Load the trained model.
+    """
+    model_path = os.path.join(prod_deployment_path, 'trainedmodel.pkl')
+    with open(model_path, 'rb') as file:
+        model = pickle.load(file)
+    return model
 
-##################Function to get summary statistics
-def dataframe_summary():
-    #calculate summary statistics here
-    return #return value should be a list containing all summary statistics
+# Function to get model predictions
+def model_predictions() -> List[Union[int, float]]:
+    """
+    read the deployed model and a test dataset, calculate predictions
+    Returns:
+            list: Returns a list containing all predictions
+    """
+    X,y = segregate_dataset(test_data_path)
+    logger.info('Loading the model')
+    model = load_model(prod_deployment_path)
+    logger.info('calculate model predictions')
+    pred = model.predict(X)
+    return pred.tolist()
 
-##################Function to get timings
-def execution_time():
-    #calculate timing of training.py and ingestion.py
-    return #return a list of 2 timing values in seconds
+# Function to get summary statistics
+def dataframe_summary() -> List[Dict[str, Dict[str, float]]]:
+    """
+    calculate summary statistics here
+    Returns:
+            list: Returns a list containing all summary statistics
+    """
+    logger.info('calculate statistics on the data')
+    # collect dataset
+    data = read_csv_files(dataset_csv_path)
+    # Select numeric columns
+    numeric_col_index = np.where(data.dtypes != object)[0]
+    numeric_col = data.iloc[:, numeric_col_index]
+    stats_dict = {}
+    stats_dict['col_means'] = dict(numeric_col.mean(axis=0))
+    stats_dict['col_medians'] = dict(numeric_col.median(axis=0))
+    stats_dict['col_std'] = dict(numeric_col.std(axis=0))
 
-##################Function to check dependencies
-def outdated_packages_list():
-    #get a list of 
+    return [stats_dict]
+
+# Function to to check for missing data
+def missing_data() -> Dict[str, float]:
+    """
+    Check the percentage of missing data for each column.
+    return:
+            Dictionary with keys corresponding to the columns of the dataset.
+            Each element of the dictionary gives the percent of NA values in a particular column of the data.
+    """
+    logger.info('calculate missing values percentage for each column')
+    data = read_csv_files(dataset_csv_path)
+    missing = data.isna().sum()
+    n_data = data.shape[0]
+    missing = missing / n_data
+    return missing.to_dict()
+
+# Function to get timings
+def execution_time() -> Dict[str, float]:
+    """
+    Calculate timing of ingestion.py and training.py
+    Returns:
+        list: Returns a list of 2 timing values in seconds
+    """
+    logger.info('calculate timing of training.py and ingestion.py')
+    times = []
+    scripts = ['ingestion.py', 'training.py']
+    for script in scripts:
+        starttime = timeit.default_timer()
+        subprocess.run(['python', script])
+        timing = timeit.default_timer() - starttime
+        times.append(timing)
+
+    formatted_times = ["{:.2f}".format(time) for time in times]
+    output = [f"{script}: {timing}" for script, timing in zip(scripts, formatted_times)]
+
+    return output
+
+# Function to check dependencies
+def outdated_packages_list() -> List[Dict[str, str]]:
+    """
+    check dependencies
+    Returns:
+            list: Returns the list of outdated dependencies
+    """
+    outdated = subprocess.run(
+            ['pip', 'list', '--outdated', '--format', 'json'], capture_output=True).stdout
+    outdated = outdated.decode('utf8').replace("'", '"')
+    outdated_list = json.loads(outdated)
+    return outdated_list
+
+def save_diagnostics() -> Dict[str, Union[List[Union[int, float]], List[Dict[str, Dict[str, float]]], Dict[str, float], List[str], List[Dict[str, str]]]]:
+        """
+        Save all diagnostics in json file
+        """
+        diagnostics = {
+            "TestDataPrediction": model_predictions(),
+            "DataFrameSummary": dataframe_summary(),
+            "MissingData": missing_data(),
+            "ExecutionTimes": execution_time(),
+            "PackagesOutdated": outdated_packages_list(),
+        }
+
+        logger.info(f"Savind Diagnostics in {prod_deployment_path}")
+        with open(os.path.join(prod_deployment_path, 'diagnostics.json'), 'w') as file:
+            file.write(json.dumps(diagnostics, indent=2))
+        return diagnostics 
 
 
 if __name__ == '__main__':
-    model_predictions()
-    dataframe_summary()
-    execution_time()
-    outdated_packages_list()
-
-
-
-
-
-    
+    print(model_predictions())
+    print(dataframe_summary())
+    print(missing_data())
+    print(execution_time())
+    print(outdated_packages_list())
+    save_diagnostics()

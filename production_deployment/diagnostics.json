@@ -1,0 +1,446 @@
+{
+  "TestDataPrediction": [
+    0,
+    1,
+    1,
+    1,
+    1
+  ],
+  "DataFrameSummary": [
+    {
+      "col_means": {
+        "lastmonth_activity": 165.65384615384616,
+        "lastyear_activity": 1502.923076923077,
+        "number_of_employees": 26.884615384615383,
+        "exited": 0.5769230769230769
+      },
+      "col_medians": {
+        "lastmonth_activity": 73.0,
+        "lastyear_activity": 955.0,
+        "number_of_employees": 14.0,
+        "exited": 1.0
+      },
+      "col_std": {
+        "lastmonth_activity": 284.0332293669447,
+        "lastyear_activity": 2192.6449584568304,
+        "number_of_employees": 31.353885785435814,
+        "exited": 0.5038314736557788
+      }
+    }
+  ],
+  "MissingData": {
+    "corporation": 0.0,
+    "lastmonth_activity": 0.0,
+    "lastyear_activity": 0.0,
+    "number_of_employees": 0.0,
+    "exited": 0.0
+  },
+  "ExecutionTimes": [
+    "ingestion.py: 0.21",
+    "training.py: 0.60"
+  ],
+  "PackagesOutdated": [
+    {
+      "name": "alembic",
+      "version": "1.4.1",
+      "latest_version": "1.12.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "antlr4-python3-runtime",
+      "version": "4.9.3",
+      "latest_version": "4.13.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "anyio",
+      "version": "3.7.1",
+      "latest_version": "4.0.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "asttokens",
+      "version": "2.2.1",
+      "latest_version": "2.4.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "celery",
+      "version": "5.3.1",
+      "latest_version": "5.3.4",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "click",
+      "version": "8.1.6",
+      "latest_version": "8.1.7",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "debugpy",
+      "version": "1.6.7.post1",
+      "latest_version": "1.8.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "diskcache",
+      "version": "5.6.1",
+      "latest_version": "5.6.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "dulwich",
+      "version": "0.21.5",
+      "latest_version": "0.21.6",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "dvc",
+      "version": "3.15.3",
+      "latest_version": "3.20.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "dvc-data",
+      "version": "2.14.0",
+      "latest_version": "2.16.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "dvc-objects",
+      "version": "1.0.0",
+      "latest_version": "1.0.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "dvc-render",
+      "version": "0.5.3",
+      "latest_version": "0.6.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "dvc-studio-client",
+      "version": "0.13.0",
+      "latest_version": "0.15.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "fastapi",
+      "version": "0.101.1",
+      "latest_version": "0.103.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "filelock",
+      "version": "3.12.2",
+      "latest_version": "3.12.4",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "Flask",
+      "version": "2.3.2",
+      "latest_version": "2.3.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "flufl.lock",
+      "version": "7.1.1",
+      "latest_version": "8.0.2",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "fonttools",
+      "version": "4.42.0",
+      "latest_version": "4.42.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "fsspec",
+      "version": "2023.6.0",
+      "latest_version": "2023.9.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "GitPython",
+      "version": "3.1.32",
+      "latest_version": "3.1.36",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "google-api-python-client",
+      "version": "2.97.0",
+      "latest_version": "2.99.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "google-auth",
+      "version": "2.22.0",
+      "latest_version": "2.23.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "google-auth-httplib2",
+      "version": "0.1.0",
+      "latest_version": "0.1.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "httpcore",
+      "version": "0.17.3",
+      "latest_version": "0.18.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "httpx",
+      "version": "0.24.1",
+      "latest_version": "0.25.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "ipykernel",
+      "version": "6.25.1",
+      "latest_version": "6.25.2",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "ipywidgets",
+      "version": "8.1.0",
+      "latest_version": "8.1.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "jupyter_client",
+      "version": "8.3.0",
+      "latest_version": "8.3.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "jupyter_server",
+      "version": "2.7.1",
+      "latest_version": "2.7.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "jupyterlab",
+      "version": "4.0.5",
+      "latest_version": "4.0.6",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "jupyterlab_server",
+      "version": "2.24.0",
+      "latest_version": "2.25.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "jupyterlab-widgets",
+      "version": "3.0.8",
+      "latest_version": "3.0.9",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "kiwisolver",
+      "version": "1.4.4",
+      "latest_version": "1.4.5",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "kombu",
+      "version": "5.3.1",
+      "latest_version": "5.3.2",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "matplotlib",
+      "version": "3.7.2",
+      "latest_version": "3.7.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "mlflow",
+      "version": "1.14.1",
+      "latest_version": "2.7.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "nbconvert",
+      "version": "7.7.3",
+      "latest_version": "7.8.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "notebook",
+      "version": "7.0.2",
+      "latest_version": "7.0.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "numpy",
+      "version": "1.23.5",
+      "latest_version": "1.24.4",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "orjson",
+      "version": "3.9.5",
+      "latest_version": "3.9.7",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "Pillow",
+      "version": "10.0.0",
+      "latest_version": "10.0.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "pip",
+      "version": "23.0.1",
+      "latest_version": "23.2.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.2.0",
+      "latest_version": "1.3.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "protobuf",
+      "version": "4.24.1",
+      "latest_version": "4.24.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "pydantic",
+      "version": "1.10.12",
+      "latest_version": "2.3.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "pygit2",
+      "version": "1.12.2",
+      "latest_version": "1.13.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "pyparsing",
+      "version": "3.0.9",
+      "latest_version": "3.1.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "pytest",
+      "version": "7.4.0",
+      "latest_version": "7.4.2",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "pytz",
+      "version": "2023.3",
+      "latest_version": "2023.3.post1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "qtconsole",
+      "version": "5.4.3",
+      "latest_version": "5.4.4",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "QtPy",
+      "version": "2.3.1",
+      "latest_version": "2.4.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "rpds-py",
+      "version": "0.9.2",
+      "latest_version": "0.10.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "scikit-learn",
+      "version": "0.24.1",
+      "latest_version": "1.3.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "scmrepo",
+      "version": "1.2.1",
+      "latest_version": "1.3.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "sentry-sdk",
+      "version": "1.29.2",
+      "latest_version": "1.31.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "setuptools",
+      "version": "56.0.0",
+      "latest_version": "68.2.2",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "soupsieve",
+      "version": "2.4.1",
+      "latest_version": "2.5",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.19",
+      "latest_version": "2.0.20",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "starlette",
+      "version": "0.27.0",
+      "latest_version": "0.31.1",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "traitlets",
+      "version": "5.9.0",
+      "latest_version": "5.10.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "typeguard",
+      "version": "2.13.3",
+      "latest_version": "4.1.5",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "urllib3",
+      "version": "1.26.16",
+      "latest_version": "2.0.4",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "wandb",
+      "version": "0.10.31",
+      "latest_version": "0.15.10",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "watchfiles",
+      "version": "0.19.0",
+      "latest_version": "0.20.0",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "websocket-client",
+      "version": "1.6.1",
+      "latest_version": "1.6.3",
+      "latest_filetype": "wheel"
+    },
+    {
+      "name": "widgetsnbextension",
+      "version": "4.0.8",
+      "latest_version": "4.0.9",
+      "latest_filetype": "wheel"
+    }
+  ]
+}
