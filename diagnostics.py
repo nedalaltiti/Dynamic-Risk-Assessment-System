@@ -17,6 +17,7 @@ from ingestion import read_csv_files
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
+
 # Load config.json and get environment variables
 with open('config.json','r') as f:
     config = json.load(f) 
@@ -56,8 +57,11 @@ def dataframe_summary() -> List[Dict[str, Dict[str, float]]]:
             list: Returns a list containing all summary statistics
     """
     logger.info('calculate statistics on the data')
+
     # collect dataset
     data = read_csv_files(dataset_csv_path)
+    data = data.drop('exited', axis=1)
+
     # Select numeric columns
     numeric_col_index = np.where(data.dtypes != object)[0]
     numeric_col = data.iloc[:, numeric_col_index]
@@ -72,11 +76,12 @@ def dataframe_summary() -> List[Dict[str, Dict[str, float]]]:
 def missing_data() -> Dict[str, float]:
     """
     Check the percentage of missing data for each column.
-    return:
+    Returns:
             Dictionary with keys corresponding to the columns of the dataset.
             Each element of the dictionary gives the percent of NA values in a particular column of the data.
     """
     logger.info('calculate missing values percentage for each column')
+
     data = read_csv_files(dataset_csv_path)
     missing = data.isna().sum()
     n_data = data.shape[0]
@@ -91,6 +96,7 @@ def execution_time() -> Dict[str, float]:
         list: Returns a list of 2 timing values in seconds
     """
     logger.info('calculate timing of training.py and ingestion.py')
+
     times = []
     scripts = ['ingestion.py', 'training.py']
     for script in scripts:
@@ -111,6 +117,8 @@ def outdated_packages_list() -> List[Dict[str, str]]:
     Returns:
             list: Returns the list of outdated dependencies
     """
+    logger.info('check the dependencies')
+    
     outdated = subprocess.run(
             ['pip', 'list', '--outdated', '--format', 'json'], capture_output=True).stdout
     outdated = outdated.decode('utf8').replace("'", '"')
@@ -129,11 +137,10 @@ def save_diagnostics() -> Dict[str, Union[List[Union[int, float]], List[Dict[str
             "PackagesOutdated": outdated_packages_list(),
         }
 
-        logger.info(f"Savind Diagnostics in {prod_deployment_path}")
+        logger.info(f"Saving Diagnostics in {prod_deployment_path}")
+
         with open(os.path.join(prod_deployment_path, 'diagnostics.json'), 'w') as file:
             file.write(json.dumps(diagnostics, indent=2))
-        return diagnostics 
-
 
 if __name__ == '__main__':
     print(model_predictions())
