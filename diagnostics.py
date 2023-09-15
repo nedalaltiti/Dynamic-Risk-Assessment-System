@@ -15,7 +15,6 @@ from typing import Dict, List, Union
 from training import segregate_dataset
 from ingestion import read_csv_files
 
-# logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 # Load config.json and get environment variables
@@ -36,7 +35,7 @@ def load_model(model_path: str):
     return model
 
 # Function to get model predictions
-def model_predictions() -> List[Union[int, float]]:
+def model_predictions(data=None) -> List[Union[int, float]]:
     """
     read the deployed model and a test dataset, calculate predictions
     Returns:

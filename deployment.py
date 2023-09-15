@@ -21,7 +21,6 @@ with open('config.json','r') as f:
 dataset_csv_path = os.path.join(config['output_folder_path'], 'ingestedfiles.txt') 
 trained_model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl')
 metrics_path = os.path.join(config['output_model_path'], 'latestscore.txt')
-
 prod_deployment_path = os.path.join(config['prod_deployment_path']) 
 
 # unction for deployment
