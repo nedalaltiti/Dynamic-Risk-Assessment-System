@@ -11,9 +11,8 @@ import pickle
 import subprocess
 import timeit
 import numpy as np
+import pandas as pd
 from typing import Dict, List, Union
-from training import segregate_dataset
-from ingestion import read_csv_files
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -26,16 +25,27 @@ dataset_csv_path = os.path.join(config['output_folder_path'], 'finaldata.csv')
 test_data_path = os.path.join(config['test_data_path'], 'testdata.csv') 
 prod_deployment_path = os.path.join(config['prod_deployment_path'])
 
+def segregate_dataset(dataset):
+    """
+    Read the dataset.
+    Returns:
+            X, y
+    """
+    X = pd.read_csv(dataset).iloc[:, 1:-1].values.reshape(-1, 3)
+    y = pd.read_csv(dataset)['exited'].values.reshape(-1, 1).ravel()
+    return X, y
+
 def load_model(model_path: str):
     """
     Load the trained model.
+    Returns: 
+            the model
     """
     model_path = os.path.join(prod_deployment_path, 'trainedmodel.pkl')
     with open(model_path, 'rb') as file:
         model = pickle.load(file)
     return model
 
-# Function to get model predictions
 def model_predictions(data=None) -> List[Union[int, float]]:
     """
     read the deployed model and a test dataset, calculate predictions
@@ -49,7 +59,6 @@ def model_predictions(data=None) -> List[Union[int, float]]:
     pred = model.predict(X)
     return pred.tolist()
 
-# Function to get summary statistics
 def dataframe_summary() -> List[Dict[str, Dict[str, float]]]:
     """
     calculate summary statistics here
@@ -59,7 +68,7 @@ def dataframe_summary() -> List[Dict[str, Dict[str, float]]]:
     logger.info('calculate statistics on the data')
 
     # collect dataset
-    data = read_csv_files(dataset_csv_path)
+    data = pd.read_csv(dataset_csv_path)
     data = data.drop('exited', axis=1)
 
     # Select numeric columns
@@ -72,7 +81,6 @@ def dataframe_summary() -> List[Dict[str, Dict[str, float]]]:
 
     return [stats_dict]
 
-# Function to to check for missing data
 def missing_data() -> Dict[str, float]:
     """
     Check the percentage of missing data for each column.
@@ -82,13 +90,12 @@ def missing_data() -> Dict[str, float]:
     """
     logger.info('calculate missing values percentage for each column')
 
-    data = read_csv_files(dataset_csv_path)
+    data = pd.read_csv(dataset_csv_path)
     missing = data.isna().sum()
     n_data = data.shape[0]
     missing = missing / n_data
     return missing.to_dict()
 
-# Function to get timings
 def execution_time() -> Dict[str, float]:
     """
     Calculate timing of ingestion.py and training.py
@@ -110,7 +117,6 @@ def execution_time() -> Dict[str, float]:
 
     return output
 
-# Function to check dependencies
 def outdated_packages_list() -> List[Dict[str, str]]:
     """
     check dependencies
