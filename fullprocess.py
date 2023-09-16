@@ -115,7 +115,7 @@ def go(testing_mode=False):
 
     # Re-deployment
     deployment = ModelDeployment(config)
-    deployment.store_model_into_pickle()
+    deployment.deploy_model()
 
     # Diagnostics and reporting
     # run diagnostics.py and reporting.py for the re-deployed model

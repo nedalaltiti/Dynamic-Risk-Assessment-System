@@ -21,7 +21,7 @@ class ModelDeployment:
         self.metrics_path = os.path.join(config['output_model_path'], 'latestscore.txt')
         self.prod_deployment_path = os.path.join(config['prod_deployment_path']) 
 
-    def store_model_into_pickle(self):
+    def deploy_model(self):
         """
         Copy the latest pickle file, the latestscore.txt value, 
         and the ingestfiles.txt file into the deployment directory
@@ -30,13 +30,13 @@ class ModelDeployment:
         os.makedirs(self.prod_deployment_path, exist_ok=True)
 
         # Copy trained model
-        shutil.copy(self.trained_model_path, self.prod_deployment_path)
+        shutil.copy2(self.trained_model_path, self.prod_deployment_path)
 
         # Copy latestscore.txt
-        shutil.copy(self.metrics_path, self.prod_deployment_path)
+        shutil.copy2(self.metrics_path, self.prod_deployment_path)
 
         # Copy ingestedfiles.txt
-        shutil.copy(self.dataset_csv_path, self.prod_deployment_path)
+        shutil.copy2(self.dataset_csv_path, self.prod_deployment_path)
 
         logging.info("Model, score, and ingested files copied to the deployment directory.")  
 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
         config = json.load(f) 
 
     deployment = ModelDeployment(config)
-    deployment.store_model_into_pickle()
+    deployment.deploy_model()
 
 
         
