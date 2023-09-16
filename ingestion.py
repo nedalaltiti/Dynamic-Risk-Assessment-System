@@ -13,49 +13,39 @@ import sys
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
-class DataIngestion:
-    def __init__(self, config_path):
-        self.config_path = config_path
+with open('config.json', 'r') as f:
+    config = json.load(f)
 
-    def load_config(self):
-        with open(self.config_path, 'r') as f:
-            config = json.load(f)
-        return config
+def read_csv_files(filename):
+    return pd.read_csv(filename)
 
-    def read_csv_files(self, filename):
-        return pd.read_csv(filename)
+def merge_multiple_dataframe():
+    logging.info('starting data ingestion process')
+    input_folder_path = config['input_folder_path']
+    output_folder_path = config['output_folder_path']
 
-    def merge_multiple_dataframe(self):
-        logging.info('starting data ingestion process')
-        config = self.load_config()
-        input_folder_path = config['input_folder_path']
-        output_folder_path = config['output_folder_path']
+    csv_files = [file for file in os.listdir(input_folder_path) if file.endswith('.csv')]
 
-        csv_files = [file for file in os.listdir(input_folder_path) if file.endswith('.csv')]
+    dataframes = []
+    for file in csv_files:
+        filepath = os.path.join(input_folder_path, file)
+        df = read_csv_files(filepath)
+        dataframes.append(df)
+    merged_df = pd.concat(dataframes, ignore_index=True).drop_duplicates()
 
-        dataframes = []
-        for file in csv_files:
-            filepath = os.path.join(input_folder_path, file)
-            df = self.read_csv_files(filepath)
-            dataframes.append(df)
-        merged_df = pd.concat(dataframes, ignore_index=True).drop_duplicates()
+    output_file = os.path.join(output_folder_path, 'finaldata.csv')
+    if os.path.exists(output_file):
+        logging.info('Output file already exists. Skipping saving process.')
+    else:
+        merged_df.to_csv(output_file, index=False)
+        logging.info('Data ingestion completed successfully.')
 
-        output_file = os.path.join(output_folder_path, 'finaldata.csv')
-        if os.path.exists(output_file):
-            logging.info('Output file already exists. Skipping saving process.')
-        else:
-            merged_df.to_csv(output_file, index=False)
-            logging.info('Data ingestion completed successfully.')
-
-        ingested_files = '\n'.join(csv_files)
-        ingested_files_path = os.path.join(output_folder_path, 'ingestedfiles.txt')
-        if not os.path.exists(ingested_files_path):
-            with open(ingested_files_path, 'w') as f:
-                f.write(ingested_files)
-                logging.info('Ingested files record created.')
-
+    ingested_files = '\n'.join(csv_files)
+    ingested_files_path = os.path.join(output_folder_path, 'ingestedfiles.txt')
+    if not os.path.exists(ingested_files_path):
+        with open(ingested_files_path, 'w') as f:
+            f.write(ingested_files)
+            logging.info('Ingested files record created.')
 
 if __name__ == '__main__':
-    config_path = 'config.json'
-    data_ingestion = DataIngestion(config_path)
-    data_ingestion.merge_multiple_dataframe()
+    merge_multiple_dataframe()

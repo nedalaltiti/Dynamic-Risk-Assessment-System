@@ -16,6 +16,12 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = '1652d576-484a-49fd-913a-6879acfa6ba4'
 
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+output_folder_path = os.path.join(config['output_folder_path'])
+prod_deployment_path = os.path.join(config['prod_deployment_path'])
+
 class ModelAPI:
     def __init__(self, config_path):
         self.config_path = config_path
@@ -44,7 +50,7 @@ class ModelAPI:
     @app.route("/scoring", methods=['GET'])
     def get_score():
         logger.info('running get_score')
-        return jsonify({'F1 score': scoring.score_model()})
+        return jsonify({'F1 score': scoring.score_model(data_path, model_path)})
 
     @app.route("/summarystats", methods=['GET'])
     def get_stats():
@@ -66,6 +72,8 @@ class ModelAPI:
 
 if __name__ == "__main__":
     config_path = 'config.json'
+    model_path = os.path.join(prod_deployment_path, 'trainedmodel.pkl')
+    data_path = os.path.join(output_folder_path, 'finaldata.csv')
     model_api = ModelAPI(config_path)
     config = model_api.load_config()
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)

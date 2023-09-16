@@ -8,10 +8,10 @@ import json
 import os
 import logging
 import seaborn as sns
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 from diagnostics import model_predictions
-from ingestion import read_csv_files
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -30,7 +30,7 @@ def score_model():
     calculate a confusion matrix using the test data and the deployed model
     """
     # Read test data
-    data = read_csv_files(test_data_path)
+    data = pd.read_csv(test_data_path)
     y = data['exited']
 
     # Get model predictions
