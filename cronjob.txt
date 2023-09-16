@@ -1,0 +1,1 @@
+*/10 * * * * python /home/nedal/my_project/Dynamic-Risk-Assessment-System/fullprocess.py
