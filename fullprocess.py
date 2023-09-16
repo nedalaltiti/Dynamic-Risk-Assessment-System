@@ -99,16 +99,16 @@ def go(testing_mode=False):
 
     # Deciding whether to proceed, part 2
     # # if we found model drift, we proceed. otherwise, we do end the process here
-    # if not model_drift and not testing_mode and not first_implementation:
-    #     logger.info('No drift found, process stop here.')
-    #     exit()
-    # elif first_implementation and not testing_mode:
-    #     logger.info("First deployment in production of the model.")
-    # elif not testing_mode:
-    #     logger.info('Model drift found we need to train and deploy a new model')
-    # else:
-    #     logger.info('No drift found')
-    #     logger.info('as we are in testing mode process continue. Should stop in production')
+    if not model_drift and not testing_mode and not first_implementation:
+        logger.info('No drift found, process stop here.')
+        exit()
+    elif first_implementation and not testing_mode:
+        logger.info("First deployment in production of the model.")
+    elif not testing_mode:
+        logger.info('Model drift found we need to train and deploy a new model')
+    else:
+        logger.info('No drift found')
+        logger.info('as we are in testing mode process continue. Should stop in production')
 
     # Re-training
     train_model(data_path, model_path)
