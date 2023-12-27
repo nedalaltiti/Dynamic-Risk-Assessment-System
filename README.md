@@ -1,7 +1,7 @@
 # Dynamic-Risk-Assessment-System
 
 ## Project Overview: Training, Scoring, and Deploying an ML Model
-The project covers the full scope of ML model deployment with continuous ingestion of data and detection of model drift leading to retraining / redeployment decisions. The model is made accessible through an API with multiple endpoints prodiving inference and various statistics about the model performance, the data and overall pipeline health.
+The project covers the full scope of ML model deployment with continuous ingestion of data and detection of model drift leading to retraining / redeployment decisions. The model is made accessible through an API with multiple endpoints providing inference and various statistics about the model performance, the data and overall pipeline health.
 
 # Context
 The project aims at building a classifier for the prediction of customer churn and overall reisk assessment. Synthetic datasets are provided to train and simulate continuous operations. The emphasis is put on the MLOps components rather than the quality of the model.
